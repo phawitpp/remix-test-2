@@ -24,7 +24,7 @@ export default function Index() {
   return (
     <div
       className="bg-neutral-950
-     h-screen w-screen flex flex-col items-center justify-between py-24 text-white gap-10"
+     h-screen w-screen flex flex-col items-center justify-between py-24 text-white gap-10 overflow-scroll"
     >
       <h1 className="text-4xl font-bold">Shadcn/UI Example clone</h1>
       <div className="flex flex-col gap-6">

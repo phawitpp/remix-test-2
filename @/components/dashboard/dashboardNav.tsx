@@ -20,7 +20,6 @@ import { ChevronsUpDown, CirclePlus } from "lucide-react";
 
 const DashboardNav: React.FC = () => {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
 
   const comboBoxInfo: ComboBoxInfo = {
     personal: {
@@ -63,7 +62,6 @@ const DashboardNav: React.FC = () => {
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
-              variant="outline"
               role="combobox"
               aria-expanded={open}
               className="w-[200px] justify-between bg-neutral-950 border border-neutral-800 hover:bg-neutral-800 text-left hover:text-white"
@@ -71,45 +69,45 @@ const DashboardNav: React.FC = () => {
               <div className="flex flex-row gap-3">
                 {" "}
                 <div className="w-5 h-5 rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-400"></div>
-                <span>{value || comboBoxInfo.personal.name}</span>
+                <span>{comboBoxInfo.personal.name}</span>
               </div>
 
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0 ">
-            <Command>
-              <CommandInput placeholder="Search team..." />
-              <CommandList>
+          <PopoverContent className="w-[200px] p-0 border-0 text-white">
+            <Command
+              className=" w-max bg-neutral-950 border border-neutral-800 text-white
+"
+            >
+              <CommandInput
+                placeholder="Search team..."
+                className=" border-0 no-underline text-white bg-neutral-950"
+              />
+              <CommandList className="text-white">
                 <CommandGroup heading="Personal Account">
-                  {comboBoxInfo.personal.name
-                    .toLowerCase()
-                    .includes(value.toLowerCase()) && (
-                    <CommandItem
-                      onSelect={() => {
-                        setValue(comboBoxInfo.personal.name);
-                        setOpen(false);
-                      }}
-                    >
-                      <div className="flex flex-row gap-3">
-                        {" "}
-                        <div className="w-5 h-5 rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-400"></div>
-                        <span>{comboBoxInfo.personal.name}</span>
-                      </div>
-                    </CommandItem>
-                  )}
+                  <CommandItem className="bg-neutral-950 text-white">
+                    <div className="flex flex-row gap-3">
+                      <div className="w-5 h-5 rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-400"></div>
+                      <span>{comboBoxInfo.personal.name}</span>
+                    </div>
+                  </CommandItem>
                 </CommandGroup>
                 <CommandGroup heading="Teams">
-                  {comboBoxInfo.teams.map((team, key) => (
-                    <CommandItem key={key}>
-                      <div className="flex flex-row gap-3">
-                        <div className="w-5 h-5 rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-400"></div>
-                        <span>{team.name}</span>
-                      </div>
-                    </CommandItem>
-                  ))}
+                  <CommandItem className="bg-neutral-950 text-white">
+                    <div className="flex flex-row gap-3">
+                      <div className="w-5 h-5 rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-400"></div>
+                      <span>{comboBoxInfo.teams[0].name}</span>
+                    </div>
+                  </CommandItem>
+                  <CommandItem className="bg-neutral-950 text-white">
+                    <div className="flex flex-row gap-3">
+                      <div className="w-5 h-5 rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-400"></div>
+                      <span>{comboBoxInfo.teams[1].name}</span>
+                    </div>
+                  </CommandItem>
                 </CommandGroup>
-                <CommandSeparator />
+                <CommandSeparator className="bg-neutral-800" />
                 <CommandItem className="h-10">
                   <div className="flex flex-row gap-3">
                     <CirclePlus className="w-5 h-5" />
