@@ -17,7 +17,6 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { ChevronsUpDown, CirclePlus } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const DashboardNav: React.FC = () => {
   const [open, setOpen] = React.useState(false);
