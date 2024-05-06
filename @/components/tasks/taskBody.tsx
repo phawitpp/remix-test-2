@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { PlusCircleIcon } from "lucide-react";
+import { PlusCircleIcon, Settings2 } from "lucide-react";
 import { DataTable } from "./taskTable";
 import { columns } from "@/lib/columns";
 import { TaskType } from "~/types/taskType";
@@ -39,7 +39,10 @@ const TaskBody: React.FC<TaskBodyProps> = ({ data }) => {
           </Button>
         </div>
         <Button className="bg-neutral-950 text-white hover:bg-neutral-800 hover:text-white border border-neutral-800">
-          <span>Filter</span>
+          <div className="flex flex-row gap-2 items-center">
+            <Settings2 className="h-4 w-4" />
+            <span>View</span>
+          </div>
         </Button>
       </div>
 

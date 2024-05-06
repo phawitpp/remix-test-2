@@ -1,70 +1,110 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { TaskType } from "~/types/taskType";
-import { MoreHorizontal } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUp,
+  ChevronsUpDown,
+  Circle,
+  CircleHelp,
+  MoreHorizontal,
+  Timer,
+} from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 export const columns: ColumnDef<TaskType>[] = [
   {
     accessorKey: "id",
     header() {
       return (
-        <div>
-          <Input type="checkbox" className="h-4 w-4" />
+        <div className="flex flex-row gap-2 items-center">
+          <Checkbox className="border border-white" />
+          <span className="text-neutral-600">Task</span>
         </div>
       );
     },
     cell: ({ row }) => {
-      const isChecked = row.isSelected;
-      const toggleCheckbox = () => {
-        row.toggleSelected();
-      };
-
+      const txt = row.getValue("id");
       return (
-        <input type="checkbox" checked={isChecked} onChange={toggleCheckbox} />
+        <div className="flex flex-row gap-2 items-center">
+          <Checkbox className="border border-white" />
+
+          <span>{"TASK-" + txt}</span>
+        </div>
       );
     },
   },
   {
-    accessorKey: "type",
-    header: "Type",
-  },
-  {
     accessorKey: "title",
-    header: "Title",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          size={"sm"}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex flex-row gap-1 items-center text-neutral-600 hover:bg-neutral-700 hover:text-white"
+        >
+          Title
+          <ChevronsUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const txt: unknown = row.getValue("title");
-      const type = row.getValue("type");
       return (
         <>
-          <div className="font-medium">{txt}</div>
-          <div className="text-xs text-neutral-500">{type}</div>
+          <div className="font-medium flex flex-row gap-1">
+            <Badge className="bg-neutral-950 border border-neutral-800">
+              {row.original.type}
+            </Badge>
+            {txt}
+          </div>
         </>
       );
     },
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header() {
+      return <span className="text-neutral-600">Status</span>;
+    },
     cell: ({ row }) => {
       const txt = row.getValue("status");
 
       return (
         <div className="font-medium">
           {txt === "In Progress" ? (
-            <span className="text-green-500">{txt}</span>
+            <div className="flex flex-row gap-1">
+              <Timer className="h-4 w-4" />
+              {txt}
+            </div>
           ) : txt === "Completed" ? (
-            <span className="text-blue-500">{txt}</span>
+            <div className="flex flex-row gap-1">
+              <Circle className="h-4 w-4" />
+              {txt}
+            </div>
           ) : txt === "Pending" ? (
-            <span className="text-yellow-500">{txt}</span>
+            <div className="flex flex-row gap-1">
+              <CircleHelp className="h-4 w-4" />
+              {txt}
+            </div>
           ) : (
             <span className="text-red-500">{txt}</span>
           )}
@@ -74,11 +114,32 @@ export const columns: ColumnDef<TaskType>[] = [
   },
   {
     accessorKey: "priority",
-    header: "Priority",
+    header() {
+      return <span className="text-neutral-600">Priority</span>;
+    },
     cell: ({ row }) => {
       const txt: unknown = row.getValue("priority");
 
-      return <div className="font-medium">{txt}</div>;
+      return (
+        <div className="font-medium">
+          {txt === "High" ? (
+            <div className="flex flex-row gap-1">
+              <ArrowUp className="h-4 w-4" />
+              {txt}
+            </div>
+          ) : txt === "Medium" ? (
+            <div className="flex flex-row gap-1">
+              <ArrowRight className="h-4 w-4" />
+              {txt}
+            </div>
+          ) : (
+            <div className="flex flex-row gap-1">
+              <ArrowDown className="h-4 w-4" />
+              {txt}
+            </div>
+          )}
+        </div>
+      );
     },
   },
   {
@@ -94,16 +155,42 @@ export const columns: ColumnDef<TaskType>[] = [
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          <DropdownMenuContent
+            align="end"
+            className="bg-neutral-950 border border-neutral-800 text-white"
+          >
+            <DropdownMenuGroup>
+              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DropdownMenuItem>Make a copy</DropdownMenuItem>
+              <DropdownMenuItem>Favorite</DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator className=" border border-neutral-800" />
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <span>Labels</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuContent
+                  align="start"
+                  className="bg-neutral-950 border border-neutral-800 text-white"
+                >
+                  <DropdownMenuRadioGroup>
+                    <DropdownMenuRadioItem value="top">
+                      Top
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="bottom">
+                      Bottom
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="right">
+                      Right
+                    </DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+            <DropdownMenuSeparator className=" border border-neutral-800" />
+            <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
