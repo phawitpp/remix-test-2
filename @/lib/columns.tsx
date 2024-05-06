@@ -11,14 +11,12 @@ import {
   MoreHorizontal,
   Timer,
 } from "lucide-react";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -29,6 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ReactNode } from "react";
 export const columns: ColumnDef<TaskType>[] = [
   {
     accessorKey: "id",
@@ -74,7 +73,7 @@ export const columns: ColumnDef<TaskType>[] = [
             <Badge className="bg-neutral-950 border border-neutral-800">
               {row.original.type}
             </Badge>
-            {txt}
+            {txt as React.ReactNode}
           </div>
         </>
       );
@@ -106,7 +105,7 @@ export const columns: ColumnDef<TaskType>[] = [
               {txt}
             </div>
           ) : (
-            <span className="text-red-500">{txt}</span>
+            <span className="text-red-500">{txt as ReactNode}</span>
           )}
         </div>
       );
@@ -130,12 +129,12 @@ export const columns: ColumnDef<TaskType>[] = [
           ) : txt === "Medium" ? (
             <div className="flex flex-row gap-1">
               <ArrowRight className="h-4 w-4" />
-              {txt}
+              {txt as ReactNode}
             </div>
           ) : (
             <div className="flex flex-row gap-1">
               <ArrowDown className="h-4 w-4" />
-              {txt}
+              {txt as ReactNode}
             </div>
           )}
         </div>
@@ -144,9 +143,7 @@ export const columns: ColumnDef<TaskType>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const payment = row.original;
-
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
