@@ -17,7 +17,7 @@ const menuLinks = [
   { name: "Music", href: "/music" },
   { name: "Mail", href: "/mail" },
   { name: "Tasks", href: "/tasks" },
-  { name: "Forms", href: "/forms" },
+  { name: "Forms", href: "/forms/profile" },
 ];
 
 export default function Index() {

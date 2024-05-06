@@ -63,7 +63,7 @@ export default function MailMain({
             sizes
           )}`;
         }}
-        className="h-full max-h-[800px] items-stretch border-neutral-800 bg-neutral-950 text-white overflow-hidden"
+        className="h-full max-h-screen items-stretch border-neutral-800 bg-neutral-950 text-white overflow-hidden"
       >
         <ResizablePanel
           defaultSize={defaultLayout[0]}
